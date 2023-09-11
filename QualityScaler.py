@@ -1,4 +1,6 @@
 import multiprocessing
+multiprocessing.set_start_method('spawn', force=True)
+import multiprocessing
 import os.path
 import shutil
 import sys
@@ -14,7 +16,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import torch.nn.init as init
-import torch_directml
+# import torch_directml
 from customtkinter import (CTk, 
                            CTkButton, 
                            CTkEntry, 
@@ -56,7 +58,7 @@ AI_modes_list         = [ "Half precision", "Full precision" ]
 device_list_names    = []
 device_list          = []
 vram_multiplier      = 0.9
-gpus_found           = torch_directml.device_count()
+gpus_found           = torch.cuda.device_count()
 downscale_algorithm  = cv2.INTER_AREA
 upscale_algorithm    = cv2.INTER_LINEAR_EXACT
 
@@ -292,7 +294,7 @@ class ScrollableImagesTextFrame(CTkScrollableFrame):
         place_loadFile_section()
 
 for index in range(gpus_found): 
-    gpu = Gpu(index = index, name = torch_directml.device_name(index))
+    gpu = Gpu(index = index, name = torch.cuda.get_device_name(index))
     device_list.append(gpu)
     device_list_names.append(gpu.name)
 
@@ -658,7 +660,7 @@ def upscale_button_command():
         print(f"  Selected AI model: {selected_AI_model}")
         print(f"  AI half precision: {half_precision}")
         print(f"  Interpolation: {selected_interpolation}")
-        print(f"  Selected GPU: {torch_directml.device_name(selected_AI_device)}")
+        print(f"  Selected GPU: {torch.cuda.get_device_name(selected_AI_device)}")
         print(f"  Selected image output extension: {selected_image_extension}")
         print(f"  Selected video output extension: {selected_video_extension}")
         print(f"  Tiles resolution for selected GPU VRAM: {tiles_resolution}x{tiles_resolution}px")
@@ -666,7 +668,7 @@ def upscale_button_command():
         print(f"  Cpu number: {cpu_number}")
         print("=" * 50)
 
-        backend = torch.device(torch_directml.device(selected_AI_device))
+        backend = torch.device(torch.device(selected_AI_device))
 
         place_stop_button()
 
@@ -1560,7 +1562,7 @@ class App():
         height       = 600
         window.geometry("675x600")
         window.minsize(width, height)
-        window.iconbitmap(find_by_relative_path("Assets" + os.sep + "logo.ico"))
+        window.iconphoto(True, tk.PhotoImage(file=find_by_relative_path("Assets" + os.sep + "logo.png")))
 
         place_up_background()
 
