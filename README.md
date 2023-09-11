@@ -25,6 +25,7 @@
 
 ## What is QualityScaler?
 Qualityscaler is a Windows app powered by AI to enhance, enlarge and reduce noise in photographs and videos.
+Edited to work for Linux
 
 ## Other AI projects.🤓
 - https://github.com/Djdefrag/RealESRScaler / RealESRScaler - image/video AI upscaler app (Real-ESRGAN)
@@ -47,7 +48,7 @@ External packages are:
 - Packaging   -> pyinstaller / upx
 
 ## Requirements. 🤓
-- Windows 11 / Windows 10
+- Linux
 - RAM >= 8Gb
 - Any Directx12 compatible GPU with  >=  4GB VRAM
 
